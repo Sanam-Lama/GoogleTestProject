@@ -1,6 +1,7 @@
 package com.example.googlemapstestproject;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 
@@ -17,8 +18,15 @@ import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 
 public class ClusterRenderer extends ClusterActivity implements ClusterManager.OnClusterItemClickListener<MyItem>,
         ClusterManager.OnClusterInfoWindowClickListener<MyItem>, GoogleMap.OnInfoWindowClickListener {
@@ -26,6 +34,8 @@ public class ClusterRenderer extends ClusterActivity implements ClusterManager.O
     private ClusterManager<MyItem> clusterManager;
     private GoogleMap googleMap;
     private JSONArray jsonArray;
+
+
 
     @Override
     public void onInfoWindowClick(Marker marker) {
@@ -57,14 +67,12 @@ public class ClusterRenderer extends ClusterActivity implements ClusterManager.O
     @Override
     protected void startDemo(GoogleMap g) {
 
-
-
 //        Log.e("Print","Sanam guuu");
         googleMap = g;
         clusterManager = new ClusterManager<>(this, googleMap);
 
         // Position the map.
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(33.8992734, 35.4811849), 15));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(33.8992389, 35.4811701), 15));
 
         // Initialize the manager with the context and the map.
         // (Activity extends context, so we can pass 'this' in the constructor.)
@@ -81,7 +89,9 @@ public class ClusterRenderer extends ClusterActivity implements ClusterManager.O
       //  googleMap.setInfoWindowAdapter(clusterManager.getMarkerManager());
 
 
-        jsonArray = readAssets();
+       // jsonArray = readAssets();
+
+        new TestAsync().execute();
 
         // Add cluster items (markers) to the cluster manager.
         addItems();
@@ -123,23 +133,74 @@ public class ClusterRenderer extends ClusterActivity implements ClusterManager.O
         }
     }
 
-    // reading the data
-    private JSONArray readAssets() {
-//        Log.e("Print","Sanam GUUU");
-        try{
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(getAssets().open("JSONFile")));
-            String line = "";
-            StringBuilder stringBuilder = new StringBuilder("");
-            while ((line = bufferedReader.readLine()) != null){
-                stringBuilder.append(line);
+//    // reading the data
+//    private JSONArray readAssets() {
+////        Log.e("Print","Sanam GUUU");
+//        try{
+//            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(getAssets().open("JSONFile")));
+//            String line = "";
+//            StringBuilder stringBuilder = new StringBuilder("");
+//            while ((line = bufferedReader.readLine()) != null){
+//                stringBuilder.append(line);
+//            }
+//
+//            return new JSONArray(stringBuilder.toString());
+//
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//        return new JSONArray();
+//    }
+
+
+    public class TestAsync extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            // using StringBuffer for immutability
+            StringBuffer response = null;
+
+            // Step 1: create a URL object
+            URL url = null;
+
+            try {
+                url = new URL("https://maps.googleapis.com/maps/api/json");
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
             }
 
-            return new JSONArray(stringBuilder.toString());
+            try {
 
-        }catch (Exception e){
-            e.printStackTrace();
+                // Step 2: HttpURLConnection is an android provided library
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+
+                InputStream in = new BufferedInputStream(connection.getInputStream());
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+
+                //  BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+
+                String inputLine;
+                response = new StringBuffer();
+                while ((inputLine = reader.readLine()) != null) {
+                    response.append(inputLine);
+                }
+
+            } catch (ProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return null;
         }
-        return new JSONArray();
+
     }
 
 }

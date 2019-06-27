@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.net.PlacesClient;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -35,10 +37,10 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private GoogleMap googleMap;
-    private JSONArray jsonArray;
+   // private JSONArray jsonArray;
     private List<MarkerOptions> listMarkers = new ArrayList<>();
-    MyItem myItem;
-    MarkerOptions markerOptions;
+  //  MyItem myItem;
+  //  MarkerOptions markerOptions;
 
     // Declare a variable for the cluster manager.
     private ClusterManager<MyItem> clusterManager;

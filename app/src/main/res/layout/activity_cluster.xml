@@ -1,38 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.google.android.gms.maps.MapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/mapFragment"
-        android:name="com.google.android.gms.maps.MapFragment"/>
+        android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
+    <com.mancj.materialsearchbar.MaterialSearchBar
+        style="@style/MaterialSearchBarLight"
+        app:mt_speechMode="true"
+        app:mt_hint="Search a place"
+        app:mt_maxSuggestionsCount="10"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/locationName"
-        android:textAppearance="@color/colorPrimary"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"/>
+        android:id="@+id/searchBar"
+        android:layout_margin="16dp"
+        app:mt_placeholder="Search a place"
+        android:outlineProvider="bounds"
+        android:elevation="5dp"
+        />
 
-    <TextView
-        android:layout_width="wrap_content"
+    <Button
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/locationGeo"
-        android:textAppearance="@color/colorPrimary"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"/>
+        android:id="@+id/buttonFind"
+        android:layout_alignParentBottom="true"
+        android:text="Find Restaurants"
+        android:textColor="#FFFFFF"
+        android:background="@color/colorPrimary"
+        android:layout_margin="16dp"
+        android:textStyle="bold"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/locationAddress"
-        android:textAppearance="@color/colorPrimary"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        android:padding="10dp"/>
 
-</LinearLayout>
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/locationName"-->
+        <!--android:textAppearance="@color/colorPrimary"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:layout_marginBottom="10dp"/>-->
+
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/locationGeo"-->
+        <!--android:textAppearance="@color/colorPrimary"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:layout_marginBottom="10dp"/>-->
+
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/locationAddress"-->
+        <!--android:textAppearance="@color/colorPrimary"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:layout_marginBottom="10dp"/>-->
+
+</RelativeLayout>
