@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <fragment
@@ -11,28 +12,69 @@
         android:id="@+id/mapFragment"
         android:name="com.google.android.gms.maps.MapFragment"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/locationName"
-        android:textAppearance="@color/colorPrimary"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"/>
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/locationGeo"
-        android:textAppearance="@color/colorPrimary"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/locationAddress"
-        android:textAppearance="@color/colorPrimary"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"/>
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/google_icon"
+            android:id="@+id/googleFAB"
+            android:layout_gravity="bottom|end"
+            android:layout_marginRight="25dp"
+            />
 
-</LinearLayout>
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_launcher_foreground"
+            android:id="@+id/launcherFAB"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="25dp"
+            />
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/floating_icon"
+            android:id="@+id/floatingActionButton"
+            android:layout_gravity="bottom|end"
+            android:elevation="10dp"
+            android:layout_marginBottom="10dp"
+            />
+    </android.support.design.widget.CoordinatorLayout>
+
+
+
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/locationName"-->
+        <!--android:textAppearance="@color/colorPrimary"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:layout_marginBottom="10dp"/>-->
+
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/locationGeo"-->
+        <!--android:textAppearance="@color/colorPrimary"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:layout_marginBottom="10dp"/>-->
+
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/locationAddress"-->
+        <!--android:textAppearance="@color/colorPrimary"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:layout_marginBottom="10dp"/>-->
+
+
+
+
+
+</RelativeLayout>

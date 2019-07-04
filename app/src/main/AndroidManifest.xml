@@ -26,7 +26,7 @@
         <activity android:name=".ClusterRenderer"/>
 
         <meta-data android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyD0UD9bfUS71Go5KZmbn8esePRit1VPXvg"/>
+            android:value="AIzaSyDtxZjLZMdF0-SQT88AmDX9AS4v8HbudhU"/>
 
         <uses-library android:name="org.apache.http.legacy" android:required="false"/>
 
