@@ -1,6 +1,7 @@
 package com.example.googlemapstestproject;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,13 +37,13 @@ import java.net.URL;
 import static com.example.googlemapstestproject.R.drawable.google_icon;
 import java.math.BigDecimal;
 
-public class ClusterRenderer extends ClusterActivity implements ClusterManager.OnClusterItemClickListener<MyItem>,
-        ClusterManager.OnClusterInfoWindowClickListener<MyItem>, GoogleMap.OnInfoWindowClickListener {
+public class ClusterRenderer extends ClusterActivity implements GoogleMap.OnInfoWindowClickListener {
 
     private ClusterManager<MyItem> clusterManager;
     private GoogleMap googleMap;
    // private JSONArray jsonArray;
     private JSONObject jsonObject;
+
 
     @Override
     public void onInfoWindowClick(Marker marker) {
@@ -54,19 +55,6 @@ public class ClusterRenderer extends ClusterActivity implements ClusterManager.O
         super(context, googleMap, clusterManager);
 
         }
-    }
-
-    @Override
-    public boolean onClusterItemClick(MyItem item) {
-        // Does nothing, but you could go into the user's profile page, for example.
-
-        Log.e("Print","4 foot");
-        return false;
-    }
-
-    @Override
-    public void onClusterInfoWindowClick(Cluster<MyItem> cluster) {
-
     }
 
     @Override
@@ -82,28 +70,36 @@ public class ClusterRenderer extends ClusterActivity implements ClusterManager.O
         // Initialize the manager with the context and the map.
         // (Activity extends context, so we can pass 'this' in the constructor.)
         clusterManager = new ClusterManager<MyItem>(this, googleMap);
-        clusterManager.setOnClusterItemClickListener(this);
-       // clusterManager.setOnClusterInfoWindowClickListener(this);
-
 
         // Point the map's listeners at the listeners implemented by the cluster manager.
         googleMap.setOnCameraIdleListener(clusterManager);
         googleMap.setOnMarkerClickListener(clusterManager);
-        googleMap.setOnInfoWindowClickListener(this);
 
-      //  googleMap.setInfoWindowAdapter(clusterManager.getMarkerManager());
+        googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+//                Log.e("Marker",marker.getTitle().toString());
+                Intent intent = new Intent(getBaseContext(), InfoActivity.class);
 
+                intent.putExtra("nameObject", marker.getTitle());
+                intent.putExtra("vicinityObject", marker.getSnippet());
 
-//        jsonArray = readAssets();
+                LatLng latlng = marker.getPosition();
+//                Log.e("longitude", Double.toString(latlng.longitude));
+//                Log.e("latitude", Double.toString(latlng.latitude));
+
+                intent.putExtra("latObject", Double.toString(latlng.latitude));
+                intent.putExtra("lngObject", Double.toString(latlng.longitude));
+
+                startActivity(intent);
+            }
+        });
 
         // for new JSON file
         jsonObject = readAssets();
 
         // Add cluster items (markers) to the cluster manager.
-        addItems();
-
-
-       // clusterManager.getMarkerCollection().setOnInfoWindowAdapter(new MyCustomAdapterForItems(inflater));
+         addItems();
     }
 
 //    private void addItems() {
@@ -145,7 +141,7 @@ public class ClusterRenderer extends ClusterActivity implements ClusterManager.O
 
             JSONArray resultsArray = jsonObject.getJSONArray("results");
 //            Log.e("REsults Array: ", resultsArray.toString());
-
+//            itemCount = resultsArray.length();
             for (int i=0; i<resultsArray.length(); i++) {
                 JSONObject resultsObject = resultsArray.getJSONObject(i);
                 String name = resultsObject.getString("name");
@@ -166,33 +162,22 @@ public class ClusterRenderer extends ClusterActivity implements ClusterManager.O
 //                Log.e("Lat", lat.toString());
                 LatLng latLng = new LatLng(lat, lng);
 
-                MyItem infoWindowItem = new MyItem(latLng, name, vicinity);
+//                Log.e("latlng", latLng.toString());
 
+                // why isnot latlng being printed in the infoWIndow??
+                MyItem infoWindowItem = new MyItem(latLng, name, vicinity);
                 clusterManager.addItem(infoWindowItem);
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        Log.e("Add item",itemCount.toString());
+//        return itemCount;
     }
 
     // for new JSON file
-    private JSONObject readAssets() {
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(getAssets().open("JSONFile")));
-            String line = "";
-            StringBuilder stringBuilder = new StringBuilder("");
-            while ((line = bufferedReader.readLine()) != null){
-                stringBuilder.append(line);
-            }
 
-            return new JSONObject(stringBuilder.toString());
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return new JSONObject();
-    }
 
 
     // reading the data from the asset JSON file
@@ -214,34 +199,4 @@ public class ClusterRenderer extends ClusterActivity implements ClusterManager.O
 //        return new JSONArray();
 //    }
 
-    // option menu: this needs to be at the bottom of the screen
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.option_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Toast.makeText(this, "Selected item: " + item.getTitle(),Toast.LENGTH_SHORT).show();
-
-        switch (item.getItemId()) {
-
-            case R.id.google_icon:
-                return true;
-
-            case R.id.listview_icon:
-                return true;
-
-//            case item.setIcon(google_icon):
-//                return true;
-//
-//            case item.setIcon(R.drawable.ic_launcher_foreground):
-//                return true;
-
-                default:
-                    return super.onOptionsItemSelected(item);
-        }
-    }
 }

@@ -9,26 +9,27 @@ import com.google.maps.android.clustering.ClusterItem;
 
 public class MyItem implements ClusterItem {
 
-    private final LatLng latLng;
+    private final LatLng position;
     private final String title;
     private final String snippet;
 
+
     public MyItem(LatLng latLng, String title, String snippet) {
-        this.latLng = latLng;
+        this.position = latLng;
         this.title = title;
         this.snippet = snippet;
     }
 
-    public MyItem(double lat, double lng) {
-        latLng = new LatLng(lat, lng);
-        title = "";
-        snippet = "";
-
-    }
+//    public MyItem() {
+//        latLng = new LatLng(0,0);
+//        title = "";
+//        snippet = "";
+//
+//    }
 
     @Override
     public LatLng getPosition() {
-        return latLng;
+        return position;
     }
 
     @Override
@@ -38,6 +39,8 @@ public class MyItem implements ClusterItem {
 
     @Override
     public String getSnippet() {
+//        String temp = "";
+//        temp = snippet + "\nLatitude: " + Double.toString(position.latitude) + "\nLongitude: " + Double.toString(position.longitude);
         return snippet;
     }
 }

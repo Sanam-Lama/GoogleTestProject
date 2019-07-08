@@ -34,24 +34,14 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private GoogleMap googleMap;
-    private JSONArray jsonArray;
-    private List<MarkerOptions> listMarkers = new ArrayList<>();
-    MyItem myItem;
-    MarkerOptions markerOptions;
-
-    // Declare a variable for the cluster manager.
-    private ClusterManager<MyItem> clusterManager;
-
-    // instance of ClusterRenderer
-    ClusterRenderer clusterRenderer;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         startActivity(new Intent(this, ClusterRenderer.class));
+//        startActivity(new Intent(this, TestActivity.class));
+//        startActivity(new Intent(this, InfoActivity.class));
 
     }
 }

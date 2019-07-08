@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="wrap_content">
+
+    <item
+        android:id="@+id/google_icon"
+        android:title="Google"
+        android:icon="@drawable/google_icon"/>
+
+    <item
+        android:id="@+id/listview_icon"
+        android:title="listview"
+        android:icon="@drawable/ic_launcher_foreground"/>
+
+</menu>
